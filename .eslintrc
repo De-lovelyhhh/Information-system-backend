@@ -1,3 +1,15 @@
 {
-  "extends": "eslint-config-egg"
+  "extends": "eslint-config-egg",
+  "rules": {
+    // 这里填入你的项目需要的个性化配置，比如：
+    "quotes": [
+      "error",
+      "single"
+    ],
+    "semi": [
+      "error",
+      "never"
+    ],
+    "handle-callback-err":0
+  }
 }
