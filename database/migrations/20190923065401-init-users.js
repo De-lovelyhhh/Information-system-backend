@@ -34,7 +34,7 @@ module.exports = {
         onDelete: 'cascade',
       },
       password: {
-        type: STRING(256),
+        type: STRING(64),
         allowNull: false,
       },
       created_at: DATE,
@@ -54,7 +54,7 @@ module.exports = {
       },
       skey: {
         primaryKey: true,
-        type: STRING(256),
+        type: STRING(64),
         allowNull: false,
       },
       expire_at: {
