@@ -16,9 +16,5 @@ module.exports = app => {
     timestamps: true,
     underscored: true,
   })
-  User.associate = function() {
-    User.hasOne(app.model.Stu.Password)
-    User.hasMany(app.model.Stu.UserLoginState)
-  }
   return User
 }

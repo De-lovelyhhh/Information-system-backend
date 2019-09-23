@@ -1,6 +1,8 @@
 // app/service/oauth.js
 'use strict'
 
+const uuid = require('uuidv4')
+
 const Service = require('egg').Service
 
 
@@ -31,10 +33,10 @@ class UserService extends Service {
     try {
       result = await ctx.curl(login_url, options)
     } catch (err) {
-      throw ctx.helper.createError(new Error('network errors'), app.errCode.OauthService.network_error)
+      throw ctx.helper.createError(new Error('network errors'), app.errCode.UserService.network_error)
     }
     if (result.status === 302) {
-      throw ctx.helper.createError(new Error('password error'), app.errCode.OauthService.password_error)
+      throw ctx.helper.createError(new Error('password error'), app.errCode.UserService.password_error)
     }
 
     // 插入数据库
@@ -45,33 +47,31 @@ class UserService extends Service {
   /**
    * 设置用户登录态
    * @param user_id
-   * @returns {Promise<{user_id: *, cookie: *, expireAt: Date}>}
+   * @return {Promise<{user_id: *, skey: *, expireAt: Date}>}
    */
   async setLoginState(user_id) {
-    const { ctx, app } = this
-    const cookie = ctx.creat_uuid()
-    const expireAt = new Date(Date.now() + app.config.cookieTTL)
-    const { UserLoginState } = app.model
+    const { app } = this
+    const skey = uuid()
+    const expire_at = new Date(Date.now() + app.config.skeyTTL)
+    const { UserLoginState } = app.model.Stu
     await UserLoginState.create({
       id: user_id,
-      cookie,
-      expireAt,
+      skey,
+      expire_at,
     })
-    return { user_id, cookie, expireAt }
+    return { user_id, skey, expire_at }
   }
-
-  /**
-   * 由cookie获取用户账号
-   * @param cookie
-   * @returns {Promise<*>}
-   */
-  async getLoginState(cookie) {
-    const { app } = this
-    const { UserLoginState } = app.model
-    const user = await UserLoginState.findOne({
-      where: { cookie },
-    })
-    return user
+  async refreshSkey(user_id) {
+    const { ctx } = this
+    const expire_at = new Date(Date.now() + ctx.app.config.skeyTTL)
+    let skey = await ctx.app.model.query('SELECT skey FROM user_login_state WHERE id = ? LIMIT 1',
+      { replacements: [ user_id ], type: ctx.app.Sequelize.SELECT })
+    skey = skey[ 0 ][ 0 ].skey
+    await ctx.app.model.query('INSERT INTO user_login_state(id,skey,expire_at) VALUES(?,?,?) ON DUPLICATE KEY UPDATE expire_at=?',
+      { replacements: [ user_id, skey, expire_at, expire_at ], type: ctx.app.Sequelize.INSERT })
+    return {
+      user_id, skey, expire_at,
+    }
   }
 }
 

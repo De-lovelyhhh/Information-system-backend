@@ -52,11 +52,12 @@ module.exports = {
         onUpdate: 'cascade',
         onDelete: 'cascade',
       },
-      cookie: {
+      skey: {
+        primaryKey: true,
         type: STRING(256),
         allowNull: false,
       },
-      expireAt: {
+      expire_at: {
         type: DATE,
         allowNull: false,
       },

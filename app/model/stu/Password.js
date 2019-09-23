@@ -21,9 +21,8 @@ module.exports = app => {
   })
 
   Password.associate = function associate() {
-    Password.User = app.model.Stu.Password.belongsTo(app.model.Stu.User, {
+    app.model.Stu.Password.belongsTo(app.model.Stu.User, {
       foreignKey: 'id',
-      as: 'user',
     })
   }
   return Password

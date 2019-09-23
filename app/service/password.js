@@ -28,7 +28,7 @@ class PasswordService extends Service {
         }),
       }, { transaction: t })
     } catch (err) {
-      throw this.ctx.helper.createError(err, app.errCode.StuService.update_user_error)
+      throw this.ctx.helper.createError(err, app.errCode.PasswordService.update_user_error)
     }
   }
 

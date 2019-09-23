@@ -23,12 +23,14 @@ module.exports = appInfo => {
     // myAppName: 'egg',
     pwKey: 'Candy666Candy666Candy666Candy666',
     pwIv: 'Candy666666Candy',
+    // 用户信息加密密钥
+    userInfoKey: '小糖666a',
   }
   // 关闭csrf防范
   config.security = { csrf: { enable: false } }
 
-  // cookie有效期
-  config.cookieTTL = 3 * 24 * 60 * 60 * 1000 // 3天
+  // skey有效期
+  config.skeyTTL = 3 * 24 * 60 * 60 * 1000 // 3天
   return {
     ...config,
     ...userConfig,

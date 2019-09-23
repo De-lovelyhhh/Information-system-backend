@@ -15,6 +15,15 @@ class UserController extends Controller {
     await ctx.service.user.stuLogin(account, password)
     ctx.body = await ctx.service.user.setLoginState(account)
   }
+  async getInfo() {
+    const { ctx } = this
+    ctx.body = await ctx.service.newsao.syncUserStuInfoFromNewsao(ctx.user_id)
+  }
+  async refreshSkey() {
+    const { ctx } = this
+    ctx.body = await ctx.service.user.refreshSkey(ctx.user_id)
+  }
+
 }
 
 module.exports = UserController

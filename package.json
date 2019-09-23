@@ -14,7 +14,9 @@
     "egg-syllabus-framework": "^1.0.30",
     "egg-validate": "^2.0.2",
     "mysql2": "^1.7.0",
-    "uuidv4": "^4.0.0"
+    "uuidv4": "^4.0.0",
+    "request-promise": "^4.2.4",
+    "jsdom": "^14.0.0"
   },
   "devDependencies": {
     "autod": "^3.0.1",

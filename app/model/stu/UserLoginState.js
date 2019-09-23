@@ -8,13 +8,13 @@ module.exports = app => {
       type: STRING(32),
       primaryKey: true,
       allowNull: false,
-      unique: true,
     },
-    password: {
+    skey: {
       type: STRING(256),
+      primaryKey: true,
       allowNull: false,
     },
-    expireAt: {
+    expire_at: {
       type: DATE,
       allowNull: false,
     },
