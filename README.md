@@ -1,33 +1,11 @@
-# info_integration
+# 基于个性化推送的校园信息系统
 
+整体架构：
 
+以小程序为展现形式，逻辑后台通过egg框架实现
 
-## QuickStart
+后期可能准备加入深度学习方面知识
 
-<!-- add docs here for user -->
+这个仓库将作为校园系统的业务后台，业务上的逻辑代码会存放在这个仓库
 
-see [egg docs][egg] for more detail.
-
-### Development
-
-```bash
-$ npm i
-$ npm run dev
-$ open http://localhost:7001/
-```
-
-### Deploy
-
-```bash
-$ npm start
-$ npm stop
-```
-
-### npm scripts
-
-- Use `npm run lint` to check code style.
-- Use `npm test` to run unit test.
-- Use `npm run autod` to auto detect dependencies upgrade, see [autod](https://www.npmjs.com/package/autod) for more detail.
-
-
-[egg]: https://eggjs.org
+​																															2019/09/24
