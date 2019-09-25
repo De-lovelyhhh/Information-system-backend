@@ -1,26 +1,20 @@
 {
   "development": {
     "username": "root",
-    "password": "1234",
-    "database": "egg_sequelize",
-    "host": "127.0.0.1",
+    "password": "ybalabala0424",
+    "database": "information-backend_dev",
+    "host": "cdb-ljkh0213.gz.tencentcdb.com",
+    "port": 10129,
     "dialect": "mysql",
-    "operatorsAliases": false
-  },
-  "test": {
-    "username": "root",
-    "password": null,
-    "database": "database_test",
-    "host": "127.0.0.1",
-    "dialect": "mysql",
-    "operatorsAliases": false
+    "timezone": "+08:00"
   },
   "production": {
     "username": "root",
-    "password": "1234",
-    "database": "info_integration",
-    "host": "127.0.0.1",
+    "password": "ybalabala0424",
+    "database": "information-backend",
+    "host": "cdb-ljkh0213.gz.tencentcdb.com",
+    "port": 10129,
     "dialect": "mysql",
-    "operatorsAliases": false
+    "timezone": "+08:00"
   }
 }
