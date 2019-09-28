@@ -24,6 +24,12 @@ class UserController extends Controller {
     ctx.body = await ctx.service.user.refreshSkey(ctx.user_id)
   }
 
+  async stuRegister() {
+    const { ctx } = this
+    const { organization_name, organization_psw, organization_info, avatar_url } = ctx.query
+    ctx.body = await ctx.service.user.stuRegister(organization_name, organization_psw, organization_info, avatar_url)
+  }
+
 }
 
 module.exports = UserController
