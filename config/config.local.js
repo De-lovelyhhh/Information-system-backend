@@ -3,11 +3,11 @@
 module.exports = {
   sequelize: {
     dialect: 'mysql',
-    host: 'cdb-ljkh0213.gz.tencentcdb.com',
+    host: '127.0.0.1',
     port: 3306,
-    database: 'information-backend_dev',
+    database: 'egg_sequelize',
     username: 'root',
-    password: 'ybalabala0424',
+    password: '1234',
     timezone: '+08:00',
   },
 }
