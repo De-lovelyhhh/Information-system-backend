@@ -7,7 +7,7 @@ module.exports = {
     port: 10129,
     database: 'information-backend_dev',
     username: 'root',
-    password: 'ybalabla0424',
+    password: 'ybalabala0424',
     timezone: '+08:00',
   },
 }
