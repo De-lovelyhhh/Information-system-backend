@@ -5,6 +5,8 @@ const errCode = {
     code: '1001',
     network_error: '01',
     password_error: '02',
+    register_had_error: '03',
+    register_unclear_error: '04',
   },
   PasswordService: {
     code: '1002',

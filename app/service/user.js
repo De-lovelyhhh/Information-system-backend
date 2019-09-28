@@ -73,6 +73,26 @@ class UserService extends Service {
       user_id, skey, expire_at,
     }
   }
+
+  async stuRegister(organizationName, organizationPsw, organizationInfo, avatarUrl) {
+    const { ctx, app } = this
+    try {
+      const Status = await ctx.model.Organization.findOne({
+        where: { organization_name: organizationName },
+      })
+      if (Status !== null) { throw ctx.helper.createError(new Error('register error'), app.errCode.UserService.register_had_error) } else {
+        await ctx.model.Organization.create({
+          organization_name: organizationName,
+          organization_psw: organizationPsw,
+          organization_info: organizationInfo,
+          avatar_url: avatarUrl,
+        })
+      }
+      return 'OK'
+    } catch (err) {
+      throw this.ctx.helper.createError(err, app.errCode.UserService.register_unclear_error)
+    }
+  }
 }
 
 module.exports = UserService
