@@ -49,7 +49,7 @@ class UserService extends Service {
    * @param user_id
    * @return {Promise<{user_id: *, skey: *, expireAt: Date}>}
    */
-  async setLoginState(user_id) {
+  async setStuLoginState(user_id) {
     const { app } = this
     const skey = uuid()
     const expire_at = new Date(Date.now() + app.config.skeyTTL)

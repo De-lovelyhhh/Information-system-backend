@@ -9,11 +9,22 @@ class UserController extends Controller {
     this.ctx.validate({
       account: 'string',
       password: 'string',
-    })
-    const account = ctx.request.body.account
-    const password = ctx.request.body.password
-    await ctx.service.user.stuLogin(account, password)
-    ctx.body = await ctx.service.user.setLoginState(account)
+      identity: [ 'student', 'organization' ],
+    }, ctx.request.body)
+    const { account, password, identity } = ctx.request.body
+    switch (identity) {
+      case 'student':
+        await ctx.service.user.stuLogin(account, password)
+        ctx.body = await ctx.service.user.setStuLoginState(account)
+        break
+      case 'organization':
+        ctx.body = await ctx.service.organization.organLogin(account, password)
+        break
+      default: {
+        return
+      }
+    }
+
   }
   async getInfo() {
     const { ctx } = this
