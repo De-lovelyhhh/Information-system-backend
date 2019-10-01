@@ -37,7 +37,7 @@ class UserController extends Controller {
 
   async stuRegister() {
     const { ctx } = this
-    const { organization_name, organization_psw, organization_info, avatar_url } = ctx.query
+    const { organization_name, organization_psw, organization_info, avatar_url } = ctx.request.body
     ctx.body = await ctx.service.user.stuRegister(organization_name, organization_psw, organization_info, avatar_url)
   }
 
