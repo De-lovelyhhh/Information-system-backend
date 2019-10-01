@@ -76,21 +76,26 @@ class UserService extends Service {
 
   async stuRegister(organizationName, organizationPsw, organizationInfo, avatarUrl) {
     const { ctx, app } = this
+    let Status
     try {
-      const Status = await ctx.model.Organization.findOne({
+      Status = await ctx.model.Organization.findOne({
         where: { organization_name: organizationName },
       })
-      if (Status !== null) { throw ctx.helper.createError(new Error('register error'), app.errCode.UserService.register_had_error) } else {
+    } catch (err) {
+      throw this.ctx.helper.createError(err, app.errCode.UserService.register_unclear_error)
+    }
+    if (Status !== null) { throw ctx.helper.createError(new Error('register error'), app.errCode.UserService.register_had_error) } else {
+      try {
         await ctx.model.Organization.create({
           organization_name: organizationName,
           organization_psw: organizationPsw,
           organization_info: organizationInfo,
           avatar_url: avatarUrl,
         })
+      } catch (err) {
+        throw this.ctx.helper.createError(err, app.errCode.UserService.register_unclear_error)
       }
       return 'OK'
-    } catch (err) {
-      throw this.ctx.helper.createError(err, app.errCode.UserService.register_unclear_error)
     }
   }
 }
