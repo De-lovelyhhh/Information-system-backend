@@ -29,9 +29,33 @@ module.exports = {
       created_at: DATE,
       updated_at: DATE,
     })
+    await queryInterface.createTable('organization_login_state', {
+      organization_name: {
+        type: STRING(32),
+        primaryKey: true,
+        allowNull: false,
+        references: {
+          model: 'organization',
+          key: 'organization_name',
+        },
+        onUpdate: 'cascade',
+        onDelete: 'cascade',
+      },
+      skey: {
+        primaryKey: true,
+        type: STRING(64),
+        allowNull: false,
+      },
+      expire_at: {
+        type: DATE,
+        allowNull: false,
+      },
+      created_at: DATE,
+      updated_at: DATE,
+    })
   },
 
-  down: async querInterface => {
+  down: async queryInterface => {
     /*
       Add reverting commands here.
       Return a promise to correctly handle asynchronicity.
@@ -39,6 +63,7 @@ module.exports = {
       Example:
       return queryInterface.dropTable('users');
     */
-    await querInterface.dropTable('organization')
+    await queryInterface.dropTable('organization')
+    await queryInterface.dropTable('organization_login_state')
   },
 }

@@ -12,6 +12,10 @@ const errCode = {
     code: '1002',
     update_user_error: '01',
   },
+  OrganizationService: {
+    code: '1003',
+    password_invalid: '01',
+  },
   loginCheck: {
     code: '2001',
     invalid_skey: '01',
