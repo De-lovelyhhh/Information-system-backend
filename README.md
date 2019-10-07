@@ -1,5 +1,5 @@
 # 基于个性化推送的校园信息系统
-![](https://travis-ci.org/Ybalabala0424/Information-system-backend.svg?branch=master)
+
 整体架构：
 
 以小程序为展现形式，逻辑后台通过egg框架实现
