@@ -11,6 +11,8 @@ module.exports = app => {
       unique: true,
     },
     info: BLOB,
+    nickname: STRING(64),
+    avatar: STRING(64),
   }, {
     tableName: 'user',
     timestamps: true,
