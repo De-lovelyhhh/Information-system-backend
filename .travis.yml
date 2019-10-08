@@ -1,12 +1,21 @@
 sudo: false
 language: node_js
 node_js:
-  - '10'
+- '10'
+branches:
+  only:
+  - master
 before_install:
-  - npm i npminstall -g
+- openssl aes-256-cbc -K $encrypted_ea15fcd73a7f_key -iv $encrypted_ea15fcd73a7f_iv
+  -in deploy_rsa.enc -out deploy_rsa -d
+- eval "$(ssh-agent -s)"
+- chmod 600 deploy_rsa
+- ssh-add deploy_rsa
 install:
-  - npminstall
-script:
-  - npm run ci
-after_script:
-  - npminstall codecov && codecov
+- ssh -p22 ubuntu@129.204.43.32
+      "npm run stop;
+      git pull;
+      cnpm install;
+      npm run start;
+      exit;"
+
