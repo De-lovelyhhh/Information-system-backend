@@ -1,6 +1,6 @@
 'use strict'
 
-module.exports = options => {
+module.exports = () => {
   return async function loginCheck(ctx, next) {
     ctx.validate({
       skey: 'string',
