@@ -14,6 +14,9 @@ before_install:
 - eval "$(ssh-agent -s)"
 - chmod 600 deploy_rsa
 - ssh-add deploy_rsa
+script:
+- npm install --registry=https://registry.npm.taobao.org
+- npm run test
 install:
 - ssh -p22 ubuntu@129.204.43.32
       "
