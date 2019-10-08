@@ -16,7 +16,9 @@ before_install:
 - ssh-add deploy_rsa
 install:
 - ssh -p22 ubuntu@129.204.43.32
-      "npm run stop;
+      "
+      cd ~/information_system/Information-system-backend/;
+      npm run stop;
       git pull;
       cnpm install;
       npm run start;
