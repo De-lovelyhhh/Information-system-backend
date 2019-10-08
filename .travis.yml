@@ -5,6 +5,9 @@ node_js:
 branches:
   only:
   - master
+addons:
+  ssh_known_hosts:
+  - 129.204.43.32
 before_install:
 - openssl aes-256-cbc -K $encrypted_ea15fcd73a7f_key -iv $encrypted_ea15fcd73a7f_iv
   -in deploy_rsa.enc -out deploy_rsa -d
