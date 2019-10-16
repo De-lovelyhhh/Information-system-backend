@@ -28,7 +28,11 @@ class UserController extends Controller {
   }
   async getInfo() {
     const { ctx } = this
-    ctx.body = await ctx.service.newsao.syncUserStuInfoFromNewsao(ctx.user_id)
+    if (ctx.header.identity === 'student') {
+      ctx.body = await ctx.service.newsao.syncUserStuInfoFromNewsao(ctx.user_id)
+    } else {
+      ctx.body = await ctx.service.organization.organizationInfoFromDb(ctx.user_id)
+    }
   }
   async refreshSkey() {
     const { ctx } = this
