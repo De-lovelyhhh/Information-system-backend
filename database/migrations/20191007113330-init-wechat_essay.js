@@ -9,60 +9,63 @@ module.exports = {
       Example:
       return queryInterface.createTable('users', { id: Sequelize.INTEGER });
     */
-    const { DATE, STRING, BLOB } = Sequelize
-    await queryInterface.createTable('user', {
+    const { DATE, STRING, INTEGER, TEXT } = Sequelize
+    await queryInterface.createTable('wechat_essay', {
       id: {
-        type: STRING(32),
+        type: INTEGER,
         primaryKey: true,
+        autoIncrement: true,
         allowNull: false,
         unique: true,
       },
-      info: BLOB,
+      user_id: {
+        type: STRING(32),
+        unique: true,
+        allowNull: false,
+        references: {
+          model: 'user',
+          key: 'user_id',
+        },
+      },
+      content: TEXT,
+      image_url: STRING(64),
+      review_num: INTEGER,
+      avatar: STRING(84),
       nickname: STRING(64),
-      avatar: STRING(64),
+      bookmarked_num: INTEGER,
+      thumbsup_num: INTEGER,
       created_at: DATE,
       updated_at: DATE,
     })
-    await queryInterface.createTable('password', {
+    await queryInterface.createTable('wechat_essay_comment', {
       id: {
-        type: STRING(32),
+        type: INTEGER,
         primaryKey: true,
+        autoIncrement: true,
+        allowNull: false,
+        unique: true,
+      },
+      attached_essay_id: {
+        type: INTEGER,
+        allowNull: false,
+        unique: true,
+        references: {
+          model: 'wechat_essay',
+          key: 'id',
+        },
+      },
+      user_id: {
+        type: STRING(32),
+        unique: true,
         allowNull: false,
         references: {
           model: 'user',
-          key: 'id',
+          key: 'user_id',
         },
-        onUpdate: 'cascade',
-        onDelete: 'cascade',
       },
-      password: {
-        type: STRING(64),
-        allowNull: false,
-      },
-      created_at: DATE,
-      updated_at: DATE,
-    })
-    await queryInterface.createTable('user_login_state', {
-      id: {
-        type: STRING(32),
-        primaryKey: true,
-        allowNull: false,
-        references: {
-          model: 'user',
-          key: 'id',
-        },
-        onUpdate: 'cascade',
-        onDelete: 'cascade',
-      },
-      skey: {
-        primaryKey: true,
-        type: STRING(64),
-        allowNull: false,
-      },
-      expire_at: {
-        type: DATE,
-        allowNull: false,
-      },
+      content: TEXT,
+      avatar: STRING(84),
+      nickname: STRING(64),
       created_at: DATE,
       updated_at: DATE,
     })
@@ -76,8 +79,6 @@ module.exports = {
       Example:
       return queryInterface.dropTable('users');
     */
-    await queryInterface.dropTable('password')
-    await queryInterface.dropTable('user_login_state')
-    await queryInterface.dropTable('user')
+    await queryInterface.dropTable('wechat_essay')
   },
 }
