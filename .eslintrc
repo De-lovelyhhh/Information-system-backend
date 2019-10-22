@@ -1,5 +1,8 @@
 {
-  "extends": "eslint-config-egg",
+  "extends": [
+        "eslint-config-egg",
+        'eslint-config-alloy'
+    ],
   "rules": {
     // 这里填入你的项目需要的个性化配置，比如：
     "quotes": [
