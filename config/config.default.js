@@ -18,6 +18,16 @@ module.exports = appInfo => {
     // add your middleware config here
     config.middleware = []
 
+    // redis配置
+    config.redis = {
+        client: {
+            port: 6379,          // Redis port
+            host: '129.204.43.32',   // Redis host
+            password: '1234',
+            db: 0,
+        },
+    }
+
     // add your user config here
     const userConfig = {
     // myAppName: 'egg',
