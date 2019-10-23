@@ -63,11 +63,22 @@ class UserService extends Service {
     }
     async refreshSkey(user_id) {
         const { ctx } = this
+        let query_table
+        let query_row
+        switch (ctx.header.identity) {
+            case 'student':
+                query_table = 'user_login_state'
+                query_row = 'id'
+                break
+            case 'organization':
+                query_table = 'organization_login_state'
+                query_row = 'organization_name'
+        }
         const expire_at = new Date(Date.now() + ctx.app.config.skeyTTL)
-        let skey = await ctx.app.model.query('SELECT skey FROM user_login_state WHERE id = ? LIMIT 1',
+        let skey = await ctx.app.model.query(`SELECT skey FROM ${query_table} WHERE ${query_row} = ? LIMIT 1`,
             { replacements: [user_id], type: ctx.app.Sequelize.SELECT })
         skey = skey[0][0].skey
-        await ctx.app.model.query('INSERT INTO user_login_state(id,skey,expire_at) VALUES(?,?,?) ON DUPLICATE KEY UPDATE expire_at=?',
+        await ctx.app.model.query(`INSERT INTO ${query_table}(${query_row},skey,expire_at) VALUES(?,?,?) ON DUPLICATE KEY UPDATE expire_at=?`,
             { replacements: [user_id, skey, expire_at, expire_at], type: ctx.app.Sequelize.INSERT })
         return {
             user_id, skey, expire_at,
