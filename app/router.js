@@ -11,4 +11,5 @@ module.exports = app => {
   router.get('/user/get_user_info', loginCheck, controller.user.getInfo)
   router.get('/user/refresh_skey', loginCheck, controller.user.refreshSkey)
   router.get('/user/register', controller.user.stuRegister)
+  router.get('/user/lookOthers', controller.user.lookOthers)
 }
