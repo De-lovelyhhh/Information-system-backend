@@ -39,8 +39,9 @@ class OrganizationService extends Service {
             return 'OK'
         }
     }
+
     /**
-   *
+   *社团用户登录
    * @param account
    * @param password
    * @return {Promise<{organization_name: *, skey: *, expire_at: Date}>}
@@ -77,6 +78,7 @@ class OrganizationService extends Service {
         if (!count[0].length) {
             throw ctx.helper.createError(new Error('数据库没有存指定团体信息'), ctx.app.errCode.OrganizationService.no_information_reserved)
         }
+
         const organization = count[0][0]
         return {
             organizationId: organization.organization_name,

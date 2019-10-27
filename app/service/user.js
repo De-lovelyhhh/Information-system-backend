@@ -61,12 +61,6 @@ class UserService extends Service {
         })
         return { user_id, skey, expire_at }
     }
-
-    /**
-   * 获取refreshSkey
-   * @param user_id
-   * @return {Promise<{user_id: *, skey: *, expire_at: Date}>}
-   */
     async refreshSkey(user_id) {
         const { ctx } = this
         let query_table

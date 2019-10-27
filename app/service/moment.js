@@ -1,5 +1,4 @@
 // app/service/moment.js
-
 const Service = require('egg').Service
 
 class MomentService extends Service {
@@ -10,7 +9,7 @@ class MomentService extends Service {
                 user_id: user_id,
                 content: content,
                 image_url: image_url,
-                review_num: 0,
+                review_nunm: 0,
                 avatar: avatar,
                 nickname: nickname,
                 bookmarked_num: 0,
@@ -21,5 +20,4 @@ class MomentService extends Service {
         }
     }
 }
-
 module.exports = MomentService
