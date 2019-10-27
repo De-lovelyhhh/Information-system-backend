@@ -61,6 +61,12 @@ class UserService extends Service {
         })
         return { user_id, skey, expire_at }
     }
+
+    /**
+   * 获取refreshSkey
+   * @param user_id
+   * @return {Promise<{user_id: *, skey: *, expire_at: Date}>}
+   */
     async refreshSkey(user_id) {
         const { ctx } = this
         let query_table
@@ -85,28 +91,44 @@ class UserService extends Service {
         }
     }
 
-    async stuRegister(organizationName, organizationPsw, organizationInfo, avatarUrl) {
-        const { ctx, app } = this
-        let Status
-        try {
-            Status = await ctx.model.Organization.findOne({
-                where: { organization_name: organizationName },
-            })
-        } catch (err) {
-            throw this.ctx.helper.createError(err, app.errCode.UserService.register_unclear_error)
-        }
-        if (Status !== null) { throw ctx.helper.createError(new Error('register error'), app.errCode.UserService.register_had_error) } else {
-            try {
-                await ctx.model.Organization.create({
-                    organization_name: organizationName,
-                    organization_psw: organizationPsw,
-                    organization_info: organizationInfo,
-                    avatar_url: avatarUrl,
-                })
-            } catch (err) {
-                throw this.ctx.helper.createError(err, app.errCode.UserService.register_unclear_error)
+    /**
+   * 查询他人基本信息
+   * @param user_id
+   * @return {Promise<{user_info}>}
+   */
+    async getOthersInfo(user_id) {
+        const { ctx, config } = this
+        const count = await ctx.app.model.query(`SELECT id,nickname,avatar,AES_DECRYPT(info, '${config.userInfoKey}') FROM user WHERE id = ? LIMIT 1`,
+            { replacements: [user_id], type: ctx.app.Sequelize.SELECT })
+        const user = count[0][0]
+        let user_info = {}
+        for (let key in user) {
+            if (user.hasOwnProperty(key)) {
+                if (key.indexOf('AES') === -1) {
+                    user_info[key] = user[key]
+                }
+                else {
+                    user_info.info = JSON.parse(Buffer.from(user[key]))
+                }
             }
-            return 'OK'
+        }
+        return {
+            user_info: user_info
+        }
+    }
+
+    /**
+   * 查看用户发送的全部信息
+   * @param user_id
+   * @return {Promise<{moments_num: *, moments: *}>}
+   */
+    async getUserMoments(user_id) {
+        const { ctx } = this
+        const essayList = await ctx.app.model.query('SELECT * FROM wechat_essay WHERE user_id = ?',
+            { replacements: [user_id], type: ctx.app.Sequelize.SELECT })
+        return {
+            moments_num: essayList[0].length,
+            moments: essayList[0]
         }
     }
 }
