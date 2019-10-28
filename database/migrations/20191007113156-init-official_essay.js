@@ -26,6 +26,7 @@ module.exports = {
                     key: 'organization_name',
                 },
             },
+            essay_content: STRING(256),
             essay_url: STRING(84),
             created_at: DATE,
             updated_at: DATE,

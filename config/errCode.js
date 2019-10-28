@@ -14,6 +14,7 @@ const errCode = {
     OrganizationService: {
         code: '1003',
         password_invalid: '01',
+        no_information_reserved: '02',
     },
     loginCheck: {
         code: '2001',
@@ -21,7 +22,7 @@ const errCode = {
         out_of_date_skey: '02',
     },
     NewsaoService: {
-        code: '1003',
+        code: '1004',
         login_newsao_request_page_unknow_error: '00',
         login_newsao_password_error: '01',
         login_newsao_param_error: '02',
@@ -37,6 +38,10 @@ const errCode = {
         search_unkonw_error: '02',
         delete_article_exist: '03',
         delete_DB_unknow_error: '04',
+    },
+    MomentService: {
+        code: '1005',
+        sendMoment_unclear_error: '00',
     }
 }
 

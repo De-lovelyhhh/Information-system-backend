@@ -19,7 +19,7 @@ module.exports = {
             },
             user_id: {
                 type: STRING(32),
-                unique: true,
+                unique: false,
                 allowNull: false,
                 references: {
                     model: 'user',
@@ -47,7 +47,7 @@ module.exports = {
             attached_essay_id: {
                 type: INTEGER,
                 allowNull: false,
-                unique: true,
+                unique: false,
                 references: {
                     model: 'wechat_essay',
                     key: 'id',
@@ -78,6 +78,7 @@ module.exports = {
       Example:
       return queryInterface.dropTable('users');
     */
+        await queryInterface.dropTable('wechat_essay_comment')
         await queryInterface.dropTable('wechat_essay')
     },
 }
