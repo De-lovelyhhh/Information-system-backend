@@ -56,6 +56,15 @@ class UserController extends Controller {
         ctx.body = await ctx.service.user.getUserMoments(ctx.user_id)
     }
 
+  async lookOthers() {
+    const { ctx } = this
+    this.ctx.validate({
+      another_id: 'string',
+      from: [ '1', '2' ],
+    }, ctx.query)
+    const { another_id, from } = ctx.query
+    ctx.body = await ctx.service.user.lookOthers(another_id, from)
+  }
 }
 
 module.exports = UserController
