@@ -78,6 +78,7 @@ module.exports = {
       Example:
       return queryInterface.dropTable('users');
     */
+        await queryInterface.dropTable('wechat_essay_comment')
         await queryInterface.dropTable('wechat_essay')
     },
 }
