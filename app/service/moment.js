@@ -9,7 +9,7 @@ class MomentService extends Service {
                 user_id: user_id,
                 content: content,
                 image_url: image_url,
-                review_nunm: 0,
+                review_num: 0,
                 avatar: avatar,
                 nickname: nickname,
                 bookmarked_num: 0,
