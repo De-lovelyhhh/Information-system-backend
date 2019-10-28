@@ -9,7 +9,7 @@ module.exports = {
                 allowNull: false,
                 unique: true
             },
-            title: STRING(256),
+            title: STRING(255),
             department: STRING(64),
             publish_date: STRING(64),
             created_at: DATE,

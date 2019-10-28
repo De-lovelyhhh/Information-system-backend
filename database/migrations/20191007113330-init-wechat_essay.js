@@ -8,7 +8,7 @@ module.exports = {
       Example:
       return queryInterface.createTable('users', { id: Sequelize.INTEGER });
     */
-        const { DATE, STRING, INTEGER, TEXT } = Sequelize
+        const { DATE, STRING, INTEGER } = Sequelize
         await queryInterface.createTable('wechat_essay', {
             id: {
                 type: INTEGER,
@@ -26,7 +26,7 @@ module.exports = {
                     key: 'id',
                 },
             },
-            content: TEXT,
+            content: STRING(255),
             image_url: STRING(64),
             review_num: INTEGER,
             avatar: STRING(84),
@@ -62,7 +62,7 @@ module.exports = {
                     key: 'id',
                 },
             },
-            content: TEXT,
+            content: STRING(255),
             avatar: STRING(84),
             nickname: STRING(64),
             created_at: DATE,
