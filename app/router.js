@@ -27,7 +27,7 @@ module.exports = app => {
     // 获取oa详情
     router.get('/oauth/oa/details', controller.oa.getOADetails)
     // oa全文搜索
-    router.get('/oauth/oa/search', controller.oa.search)
+    router.post('/oauth/oa/search', controller.oa.search)
     // 删除oa接口
     router.get('/oauth/oa/delete', controller.oa.delete)
 

@@ -156,31 +156,6 @@ class OaService extends Service {
         return attachment
     }
 
-
-    // oa搜索
-    async search(keyword, row_start, row_end) {
-        const { ctx, app } = this
-        let result
-        const options = {
-            url: WeChatOAURL,
-            qs: {
-                token: 'stu', // 该参数不为空即可
-                subcompany_id: 0, // 固定参数
-                keyword,
-                row_start,
-                row_end
-            }
-        }
-        try {
-            result = await request_promise(options)
-        } catch (err) {
-            ctx.logger.warn(err)
-            throw ctx.helper.createError('[OA-搜索功能]未知错误', app.errCode.OaService.getOADetails_unknow_error)
-        }
-        // 格式化以及组装返回的数据
-        const data = this[FORMAT_DATA](result)
-        return data
-    }
     async [FORMAT_DATA](result) {
         let data = []
         const temp = JSON.parse(result)
