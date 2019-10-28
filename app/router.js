@@ -33,5 +33,5 @@ module.exports = app => {
 
     // 消息圈接口
     // 发布消息
-    router.get('/moment/send', loginCheck, controller.sendMoment)
+    router.get('/moment/send', loginCheck, controller.moment.sendMoment)
 }
