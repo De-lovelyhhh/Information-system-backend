@@ -10,24 +10,12 @@ class SearchService extends Service {
     async searchPatternCheck(pattern) {
         const { ctx } = this
         ctx.validate({
-            'search_mode': ['exact', 'vague'],
             'begin_date': 'date?',
             'end_date': 'date?',
+            'ncs_keyword': 'string',
+            'opt_keyword': 'string?',
+            'excld_keyword': 'string?'
         }, pattern)
-        switch (pattern.search_mode) {
-            case 'exact':
-                ctx.validate({
-                    'ncs_keyword': 'string',
-                    'opt_keyword': 'string?',
-                    'excld_keyword': 'string?'
-                }, pattern)
-                break
-            case 'vague':
-                ctx.validate({
-                    'keyword': 'string'
-                }, pattern)
-                break
-        }
         return
     }
 
@@ -40,7 +28,7 @@ class SearchService extends Service {
      * @param excld_keyword
      * @return {Promise<void>}
      */
-    async searchOA_exact(begin_date, end_date, ncs_keyword, opt_keyword, excld_keyword) {
+    async searchOA(begin_date, end_date, ncs_keyword, opt_keyword, excld_keyword) {
         const { ctx, app } = this
         // 起始日期默认值
         const begin = begin_date || '1970-01-01'
@@ -58,17 +46,6 @@ class SearchService extends Service {
         const search_result = await app.model.query('SELECT id,department,title,publish_date FROM oa WHERE match(department,title) against(? in boolean mode) and publish_date BETWEEN ? and ?',
             { replacements: [search_pattern, begin, end], type: ctx.app.Sequelize.SELECT })
         return search_result[0]
-    }
-
-    /**
-     * OA模糊搜索
-     * @param begin_date
-     * @param end_date
-     * @param keyword
-     * @return {Promise<void>}
-     */
-    async searchOA_vague(begin_date, end_date, keyword) {
-
     }
 }
 
