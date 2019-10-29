@@ -26,14 +26,11 @@ class OaController extends Controller {
     async search() {
         const { ctx } = this
         // 验证参数
-        const options = {
-            keyword: 'string',
-            row_start: 'string',
-            row_end: 'string'
-        }
-        ctx.validate(options, ctx.query)
-        const { keyword, row_start, row_end } = ctx.query
-        ctx.body = await ctx.service.oa.search(keyword, row_start, row_end)
+        await ctx.service.search.searchPatternCheck(ctx.request.body)
+        const { begin_date, end_date, ncs_keyword, opt_keyword, excld_keyword } = ctx.request.body
+        let search_result
+        search_result = await ctx.service.search.searchOA(begin_date, end_date, ncs_keyword, opt_keyword, excld_keyword)
+        ctx.body = search_result
     }
     async delete() {
         const { ctx } = this

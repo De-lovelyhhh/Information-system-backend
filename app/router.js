@@ -29,7 +29,7 @@ module.exports = app => {
     // 获取oa详情
     router.get('/oauth/oa/details', controller.oa.getOADetails)
     // oa全文搜索
-    router.get('/oauth/oa/search', controller.oa.search)
+    router.post('/oauth/oa/search', controller.oa.search)
     // 删除oa接口
     router.get('/oauth/oa/delete', controller.oa.delete)
 
@@ -38,4 +38,6 @@ module.exports = app => {
     router.get('/moment/send', loginCheck, controller.moment.sendMoment)
     // 发表评论
     router.get('/moment/comment', loginCheck, controller.moment.comment)
+    // 信息圈搜索
+    router.post('/moment/search', loginCheck, controller.moment.search)
 }
