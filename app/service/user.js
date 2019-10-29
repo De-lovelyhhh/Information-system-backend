@@ -91,26 +91,21 @@ class UserService extends Service {
    * @return {Promise<{user_info}>}
    */
     async getOthersInfo(user_id) {
-        // 只能查个体用户 还需补充团体用户
-        // 完善错误处理
-        const { ctx, config, app } = this
+        const { ctx, config } = this
         const count = await ctx.app.model.query(`SELECT id,nickname,avatar,AES_DECRYPT(info, '${config.userInfoKey}') FROM user WHERE id = ? LIMIT 1`,
             { replacements: [user_id], type: ctx.app.Sequelize.SELECT })
         const user = count[0][0]
         let user_info = {}
-        let flag = false
         for (let key in user) {
             if (user.hasOwnProperty(key)) {
                 if (key.indexOf('AES') === -1) {
                     user_info[key] = user[key]
                 }
-                else {
+                else if (user[key] !== null) {
                     user_info.info = JSON.parse(Buffer.from(user[key]))
-                    flag = true
                 }
             }
         }
-        if (!flag) throw ctx.helper.createError(new Error('数据库没有缓存当前用户信息'), app.errCode.UserService.no_user_info)
         return {
             user_info: user_info
         }
