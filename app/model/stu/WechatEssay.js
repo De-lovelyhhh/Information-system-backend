@@ -1,5 +1,5 @@
 module.exports = app => {
-    const { STRING, INTEGER, DATE, TEXT } = app.Sequelize
+    const { STRING, INTEGER, DATE } = app.Sequelize
 
     const WechatEssay =  app.model.define('WechatEssay', {
         id: {
