@@ -6,6 +6,7 @@ const errCode = {
         password_error: '02',
         register_had_error: '03',
         register_unclear_error: '04',
+        no_user_info: '05',
     },
     PasswordService: {
         code: '1002',

@@ -91,11 +91,12 @@ class UserService extends Service {
    * @return {Promise<{user_info}>}
    */
     async getOthersInfo(user_id) {
-        const { ctx, config } = this
+        const { ctx, config, app } = this
         const count = await ctx.app.model.query(`SELECT id,nickname,avatar,AES_DECRYPT(info, '${config.userInfoKey}') FROM user WHERE id = ? LIMIT 1`,
             { replacements: [user_id], type: ctx.app.Sequelize.SELECT })
         const user = count[0][0]
         let user_info = {}
+        let flag = false
         for (let key in user) {
             if (user.hasOwnProperty(key)) {
                 if (key.indexOf('AES') === -1) {
@@ -103,9 +104,11 @@ class UserService extends Service {
                 }
                 else {
                     user_info.info = JSON.parse(Buffer.from(user[key]))
+                    flag = true
                 }
             }
         }
+        if (!flag) throw ctx.helper.createError(new Error('数据库没有缓存当前用户信息'), app.errCode.UserService.no_user_info)
         return {
             user_info: user_info
         }
@@ -118,7 +121,7 @@ class UserService extends Service {
    */
     async getUserMoments(user_id) {
         const { ctx } = this
-        const essayList = await ctx.app.model.query('SELECT * FROM wechat_essay WHERE user_id = ?',
+        const essayList = await ctx.app.model.query('SELECT * FROM wechat_essay WHERE essay_user_id = ?',
             { replacements: [user_id], type: ctx.app.Sequelize.SELECT })
         return {
             moments_num: essayList[0].length,
@@ -127,19 +130,9 @@ class UserService extends Service {
     }
 
     async getUserComments(user_id) {
-        const { app, ctx } = this
-        const Sequelize = app.Sequelize
-        const commentList = await ctx.model.Stu.WechatEssayComment.findAll({
-            where: {
-                user_id: user_id,
-            },
-            include: {
-                model: ctx.model.WechatEssay,
-                where: {
-                    id: Sequelize.col('wechat_essay_comment.attached_essay_id')
-                }
-            }
-        })
+        const { ctx } = this
+        const commentList = await ctx.app.model.query('SELECT * FROM wechat_essay,wechat_essay_comment WHERE wechat_essay_comment.attached_essay_id=wechat_essay.id and wechat_essay_comment.comment_user_id = ?',
+            { replacements: [user_id], type: ctx.app.Sequelize.SELECT })
         return {
             comments_num: commentList[0].length,
             comments: commentList[0]

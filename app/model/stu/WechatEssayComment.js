@@ -1,5 +1,5 @@
 module.exports = app => {
-    const { STRING, INTEGER, DATE, TEXT } = app.Sequelize
+    const { STRING, INTEGER, DATE } = app.Sequelize
 
     const WechatEssayComment =  app.model.define('WechatEssayComment', {
         id: {
@@ -18,15 +18,15 @@ module.exports = app => {
                 key: 'id',
             },
         },
-        user_id: {
+        comment_user_id: {
             type: STRING(32),
-            unique: true,
+            unique: false,
             allowNull: false,
         },
-        identity: STRING,
-        content: TEXT,
-        avatar: STRING(84),
-        nickname: STRING(64),
+        comment_user_identity: STRING(64),
+        comment_user_avatar: STRING(84),
+        comment_user_nickname: STRING(64),
+        comment_content: STRING(255),
         created_at: DATE,
         updated_at: DATE,
     }, {
@@ -36,7 +36,7 @@ module.exports = app => {
     })
 
     WechatEssayComment.associate = function() {
-        WechatEssayComment.belongsTo(app.model.Stu.WechatEssay, { foreignKey: 'id' })
+        WechatEssayComment.belongsTo(app.model.Stu.WechatEssay, { foreignKey: 'attached_essay_id', targetKey: 'id' })
     }
 
     return WechatEssayComment

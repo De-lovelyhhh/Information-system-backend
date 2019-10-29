@@ -6,13 +6,13 @@ class MomentService extends Service {
         const { app, ctx } = this
         try {
             await ctx.model.Stu.WechatEssay.create({
-                user_id: user_id,
-                identity: identity,
-                content: content,
-                image_url: image_url,
+                essay_user_id: user_id,
+                essay_user_identity: identity,
+                essay_user_image_url: image_url,
+                essay_user_avatar: avatar,
+                essay_user_nickname: nickname,
+                essay_content: content,
                 review_num: 0,
-                avatar: avatar,
-                nickname: nickname,
                 bookmarked_num: 0,
                 thumbsup_num: 0,
             })
@@ -25,11 +25,11 @@ class MomentService extends Service {
         try {
             await ctx.model.Stu.WechatEssayComment.create({
                 attached_essay_id: essay_id,
-                user_id: user_id,
-                identity: identity,
-                content: content,
-                avatar: avatar,
-                nickname: nickname,
+                comment_user_id: user_id,
+                comment_user_identity: identity,
+                comment_user_avatar: avatar,
+                comment_user_nickname: nickname,
+                comment_content: content,
             })
         } catch (err) {
             throw this.ctx.helper.createError(err, app.errCode.MomentService.comment_unclear_error)
