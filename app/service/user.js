@@ -91,6 +91,8 @@ class UserService extends Service {
    * @return {Promise<{user_info}>}
    */
     async getOthersInfo(user_id) {
+        // 只能查个体用户 还需补充团体用户
+        // 完善错误处理
         const { ctx, config, app } = this
         const count = await ctx.app.model.query(`SELECT id,nickname,avatar,AES_DECRYPT(info, '${config.userInfoKey}') FROM user WHERE id = ? LIMIT 1`,
             { replacements: [user_id], type: ctx.app.Sequelize.SELECT })

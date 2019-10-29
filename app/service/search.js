@@ -62,9 +62,9 @@ class SearchService extends Service {
         excld = excld.trim().replace(/\s+/g, ' -')
         if (excld !== '') excld = '-' + excld
         const search_pattern = ncs + ' ' + excld + ' ' + opt
-        const search_result_essay = await app.model.query('SELECT * FROM wechat_essay WHERE match(user_id,content) against(? in boolean mode) and created_at BETWEEN ? and ?',
+        const search_result_essay = await app.model.query('SELECT * FROM wechat_essay WHERE match(essay_user_id,essay_content) against(? in boolean mode) and created_at BETWEEN ? and ?',
             { replacements: [search_pattern, begin, end], type: ctx.app.Sequelize.SELECT })
-        const search_result_comment = await app.model.query('SELECT * FROM wechat_essay_comment WHERE match(user_id,content) against(? in boolean mode) and created_at BETWEEN ? and ?',
+        const search_result_comment = await app.model.query('SELECT * FROM wechat_essay_comment WHERE match(comment_user_id,comment_content) against(? in boolean mode) and created_at BETWEEN ? and ?',
             { replacements: [search_pattern, begin, end], type: ctx.app.Sequelize.SELECT })
         return { essay: search_result_essay[0], comment: search_result_comment[0] }
     }

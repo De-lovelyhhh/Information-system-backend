@@ -13,10 +13,6 @@ module.exports = app => {
             type: STRING(32),
             unique: false,
             allowNull: false,
-            references: {
-                model: 'user',
-                key: 'id',
-            },
         },
         essay_user_identity: STRING(64),
         essay_user_image_url: STRING(64),

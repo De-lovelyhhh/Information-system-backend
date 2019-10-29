@@ -21,10 +21,6 @@ module.exports = {
                 type: STRING(32),
                 unique: false,
                 allowNull: false,
-                references: {
-                    model: 'user',
-                    key: 'id',
-                },
             },
             essay_user_identity: STRING(64),
             essay_content: STRING(255),
