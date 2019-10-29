@@ -13,11 +13,8 @@ module.exports = app => {
             type: STRING(32),
             unique: false,
             allowNull: false,
-            references: {
-                model: 'user',
-                key: 'id',
-            },
         },
+        identity: STRING,
         content: TEXT,
         image_url: STRING(64),
         review_num: INTEGER,

@@ -42,6 +42,7 @@ const errCode = {
     MomentService: {
         code: '1005',
         sendMoment_unclear_error: '00',
+        comment_unclear_error: '01',
     }
 }
 

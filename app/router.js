@@ -20,6 +20,8 @@ module.exports = app => {
     router.get('/user/refresh_skey', loginCheck, controller.user.refreshSkey)
     // 用户查看自己发表的消息
     router.get('/user/get_user_moments', loginCheck, controller.user.getUserMoments)
+    // 用户查看自己发表过的评论
+    router.get('/user/get_user_comments', loginCheck, controller.user.getUserComments)
 
     // OA接口
     // 获取oa列表
@@ -34,4 +36,6 @@ module.exports = app => {
     // 消息圈接口
     // 发布消息
     router.get('/moment/send', loginCheck, controller.moment.sendMoment)
+    // 发表评论
+    router.get('/moment/comment', loginCheck, controller.moment.comment)
 }

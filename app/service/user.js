@@ -125,6 +125,26 @@ class UserService extends Service {
             moments: essayList[0]
         }
     }
+
+    async getUserComments(user_id) {
+        const { app, ctx } = this
+        const Sequelize = app.Sequelize
+        const commentList = await ctx.model.Stu.WechatEssayComment.findAll({
+            where: {
+                user_id: user_id,
+            },
+            include: {
+                model: ctx.model.WechatEssay,
+                where: {
+                    id: Sequelize.col('wechat_essay_comment.attached_essay_id')
+                }
+            }
+        })
+        return {
+            comments_num: commentList[0].length,
+            comments: commentList[0]
+        }
+    }
 }
 
 module.exports = UserService
