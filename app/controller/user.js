@@ -34,7 +34,7 @@ class UserController extends Controller {
     }
     async getOthersInfo() {
         const { ctx } = this
-        if (ctx.header.identity === 'student') {
+        if (ctx.query.identity === 'student') {
             ctx.body = await ctx.service.user.getOthersInfo(ctx.query.user_id)
         } else {
             ctx.body = await ctx.service.organization.organizationInfoFromDb(ctx.query.user_id)
